@@ -1,2 +1,2 @@
 # microservice-protocols
-A simple messaging app which uses gRPC and protocol buffers
+A poc which explores the various communication patterns and protocols used in microservices.

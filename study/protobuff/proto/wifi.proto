@@ -1,0 +1,72 @@
+/**
+This is a definition based on tr-181 broadband forum wifi model for cpe devices
+Refer:
+https://cwmp-data-models.broadband-forum.org/tr-181-2-15-1-cwmp.html#H.Device:2.WiFiRadio:1%20Profile
+https://cwmp-data-models.broadband-forum.org/tr-181-2-15-1-cwmp.html#H.Device:2.WiFiSSID:1%20Profile
+*/
+syntax = "proto3";
+
+package device;
+
+option go_package = "github.com/sankar888/protobuff-golang;device";
+
+message Device {
+    WiFi wifi = 1;
+}
+
+message WiFi {
+    uint32 radio_number_of_entries = 1;
+    uint32 ssid_number_of_entries = 2;
+    repeated Radio radio = 3;
+    repeated SSID ssid = 4;
+}
+
+message Radio {
+    bool enable = 1;
+    string status = 2;
+    string alias = 3;
+    string name = 4;
+    bool upstream = 5;
+    uint32 max_bit_rate = 6;
+    repeated string supported_frequency_bands = 7;
+    string operating_frequency_band = 8;
+    uint32 channel = 9;
+    RadioStats stats = 10;
+}
+
+message RadioStats {
+    uint64 bytes_sent = 1;
+    uint64 bytes_received = 2;
+    uint64 packets_sent = 3;
+    uint64 packets_received = 4;
+    uint32 errors_sent = 5;
+    uint32 errors_received = 6;
+}
+
+message SSID {
+    bool enable = 1;
+    string status = 2;
+    string alias = 3;
+    string name = 4;
+    //Comma-separated list (maximum number of characters 1024) of strings. 
+    //Each list item MUST be the Path Name of an interface object that is stacked immediately below this interface object.
+    //Ex: "Device.WiFi.Radio.0", "Device.WiFi.Radio.1"
+    repeated string lower_layers = 5;
+    //This is the MAC address of the access point, which can either be local (when this instance models an access point SSID) or remote (when this instance models an end point SSID).
+    bytes bssid = 6;
+    //If this instance models an access point SSID, MACAddress is the same as BSSID.
+    //macaddress has 6 bytes, in string format it total size is 17 with 5 delimiter
+    //Ex. FF-FF-FF-FF-FF-FF or FF:FF:FF:FF:FF:FF
+    bytes mac_address = 7;
+    string ssid = 8;
+}
+
+message SSIDStats {
+    uint64 bytes_sent = 1;
+    uint64 bytes_received = 2;
+    uint64 packets_sent = 3;
+    uint64 packets_received = 4;
+    uint32 errors_sent = 5;
+    uint32 errors_received = 6;
+}
+

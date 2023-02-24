@@ -59,6 +59,7 @@ message SSID {
     //Ex. FF-FF-FF-FF-FF-FF or FF:FF:FF:FF:FF:FF
     bytes mac_address = 7;
     string ssid = 8;
+    SSIDStats stats = 9;
 }
 
 message SSIDStats {
